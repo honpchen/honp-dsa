@@ -15,14 +15,37 @@ public class BinarySearch {
      * @return 找到返回数组索引，否则返回 -1
      */
     public static int basicSearch(int[] data, int target) {
-        int i = 0;                  // 设置指针和初始值
-        int j = data.length - 1;
-        while (i <= j) {
-            int m = (i + j) / 2;
+        int min = 0;                  // 设置指针和初始值
+        int max = data.length - 1;
+        while (min <= max) {
+            //int m = (min + max) / 2;    // 数组过大会发生溢出，可以使用右移计算
+            int m = (min + max) >>> 1;
             if (target < data[m]) {         // 目标值在左边
-                j = m -1;
+                max = m -1;
             } else if (data[m] < target) {  // 目标值在右边
-                i = m + 1;
+                min = m + 1;
+            } else {
+                return m;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 二分查找改动版本
+     * @param data      待查找的升序数组
+     * @param target    待查找目标值
+     * @return 找到返回数组索引，否则返回 -1
+     */
+    public static int alternativeSearch(int[] data, int target) {
+        int min = 0;                  // 设置指针和初始值
+        int max = data.length;        // max 指向的是非查找目标
+        while (min < max) {
+            int m = (min + max) >>> 1;
+            if (target < data[m]) {         // 目标值在左边
+                max = m;
+            } else if (data[m] < target) {  // 目标值在右边
+                min = m + 1;
             } else {
                 return m;
             }
