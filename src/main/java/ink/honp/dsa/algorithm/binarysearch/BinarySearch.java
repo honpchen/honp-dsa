@@ -15,15 +15,15 @@ public class BinarySearch {
      * @return 找到返回数组索引，否则返回 -1
      */
     public static int basicSearch(int[] data, int target) {
-        int min = 0;                  // 设置指针和初始值
-        int max = data.length - 1;
-        while (min <= max) {
-            //int m = (min + max) / 2;    // 数组过大会发生溢出，可以使用右移计算
-            int m = (min + max) >>> 1;
+        int i = 0;                  // 设置指针和初始值
+        int j = data.length - 1;
+        while (i <= j) {
+            //int m = (i + j) / 2;    // 数组过大会发生溢出，可以使用右移计算
+            int m = (i + j) >>> 1;
             if (target < data[m]) {         // 目标值在左边
-                max = m -1;
+                j = m -1;
             } else if (data[m] < target) {  // 目标值在右边
-                min = m + 1;
+                i = m + 1;
             } else {
                 return m;
             }
@@ -38,18 +38,81 @@ public class BinarySearch {
      * @return 找到返回数组索引，否则返回 -1
      */
     public static int alternativeSearch(int[] data, int target) {
-        int min = 0;                  // 设置指针和初始值
-        int max = data.length;        // max 指向的是非查找目标
-        while (min < max) {
-            int m = (min + max) >>> 1;
+        int i = 0;                  // 设置指针和初始值
+        int j = data.length;        // j 指向的是非查找目标
+        while (i < j) {
+            int m = (i + j) >>> 1;
             if (target < data[m]) {         // 目标值在左边
-                max = m;
+                j = m;
             } else if (data[m] < target) {  // 目标值在右边
-                min = m + 1;
+                i = m + 1;
             } else {
                 return m;
             }
         }
         return -1;
+    }
+
+    /**
+     * 查询最左则的元素
+     * @return 若有重复目标元素返回最左侧元素索引
+     */
+    public static int searchLeftmost(int[] data, int target) {
+        int i = 0;                  // 设置指针和初始值
+        int j = data.length - 1;
+        int candidate = -1;
+        while (i <= j) {
+            //int m = (i + j) / 2;    // 数组过大会发生溢出，可以使用右移计算
+            int m = (i + j) >>> 1;
+            if (target < data[m]) {         // 目标值在左边
+                j = m -1;
+            } else if (data[m] < target) {  // 目标值在右边
+                i = m + 1;
+            } else {
+                candidate = m;
+                j = m - 1;
+            }
+        }
+        return candidate;
+    }
+
+
+    /**
+     * 改进版本：查询最左则的元素
+     * @return 返回 ≥ target最靠左索引
+     */
+    public static int searchLeftmost2(int[] data, int target) {
+        int i = 0;                  // 设置指针和初始值
+        int j = data.length - 1;
+        while (i <= j) {
+            //int m = (i + j) / 2;    // 数组过大会发生溢出，可以使用右移计算
+            int m = (i + j) >>> 1;
+            if (target <= data[m]) {         // 目标值在左边
+                j = m -1;
+            } else {  // 目标值在右边
+                i = m + 1;
+            }
+        }
+        return i;
+    }
+
+
+    /**
+     * 改进版本：查询最左则的元素
+     * @return 返回 ≤ target最靠右索引
+     */
+    public static int searchRightmost2(int[] data, int target) {
+        int i = 0;                  // 设置指针和初始值
+        int j = data.length - 1;
+        while (i <= j) {
+            //int m = (i + j) / 2;    // 数组过大会发生溢出，可以使用右移计算
+            int m = (i + j) >>> 1;
+            if (target < data[m]) {         // 目标值在左边
+                j = m - 1;
+            } else {  // 目标值在右边
+                i = m + 1;
+            }
+        }
+        return i - 1;
     }
 }

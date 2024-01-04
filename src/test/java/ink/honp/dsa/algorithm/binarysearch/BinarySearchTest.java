@@ -14,7 +14,7 @@ class BinarySearchTest {
     @Test
     @DisplayName("基本二分查找")
     void testBasicSearch() {
-        final int data[] = {1,3,5,10,34,44,56,77,88,89,91,100,101,104};
+        final int[] data = {1,3,5,10,34,44,56,77,88,89,91,100,101,104};
 
         Assertions.assertEquals(0, BinarySearch.basicSearch(data, 1));
         Assertions.assertEquals(2, BinarySearch.basicSearch(data, 5));
@@ -29,7 +29,7 @@ class BinarySearchTest {
     @Test
     @DisplayName("改动版本基本二分查找测试")
     void testAlternativeSearch() {
-        final int data[] = {1,3,5,10,34,44,56,77,88,89,91,100,101,104};
+        final int[] data = {1,3,5,10,34,44,56,77,88,89,91,100,101,104};
 
         Assertions.assertEquals(0, BinarySearch.alternativeSearch(data, 1));
         Assertions.assertEquals(2, BinarySearch.alternativeSearch(data, 5));
@@ -39,5 +39,15 @@ class BinarySearchTest {
         Assertions.assertEquals(11, BinarySearch.alternativeSearch(data, 100));
         Assertions.assertEquals(13, BinarySearch.alternativeSearch(data, 104));
         Assertions.assertEquals(-1, BinarySearch.alternativeSearch(data, 105));
+    }
+
+    @Test
+    @DisplayName("查询最左则目标元素")
+    void testSearchLeftmost() {
+        final int[] data = {1,3,5,6,6,6,7,8,8,8,8};
+        Assertions.assertEquals(3, BinarySearch.searchLeftmost(data, 6));
+        Assertions.assertEquals(-1, BinarySearch.searchLeftmost(data, 0));
+        Assertions.assertEquals(7, BinarySearch.searchLeftmost(data, 8));
+        Assertions.assertEquals(-1, BinarySearch.searchLeftmost(data, 9));
     }
 }
